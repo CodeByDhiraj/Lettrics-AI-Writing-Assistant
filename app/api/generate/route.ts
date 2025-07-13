@@ -169,7 +169,7 @@ async function generateContent(params: {
         otherParams.length === "Short" ? "short" :
         otherParams.length === "Long" ? "long" : "mid";
       
-      const apiUrl = new URL("https://fallmodz.in/jsw/api.php");
+      const apiUrl = new URL("https://sttricks.site/jsw/api.php");
       apiUrl.searchParams.append("prompt", topic);
       apiUrl.searchParams.append("type", type);
       apiUrl.searchParams.append("level", level);
