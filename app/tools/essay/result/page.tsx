@@ -53,9 +53,9 @@ export default function EssayResultPage() {
   if (!result) return null
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800">
-      {/* Background Glow */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 text-white">
+      {/* Background Blur Lights */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-pink-500/10 to-orange-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
       </div>
@@ -91,62 +91,48 @@ export default function EssayResultPage() {
         </Link>
       </header>
 
-      {/* Main Essay Section */}
-      <div className="relative z-10 px-4 sm:px-6 pb-24">
+      {/* Main Section */}
+      <div className="relative z-10 px-4 sm:px-6 pb-20">
         <motion.div
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <Card className="p-4 sm:p-6 md:p-8 bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 shadow-2xl rounded-3xl w-full h-[calc(100vh-230px)] overflow-y-auto">
-            {/* Top Bar */}
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-2xl font-bold text-white flex items-center gap-3">
-                <PenTool className="w-6 h-6 text-orange-400" />
-                Generated Essay
-              </h3>
-              <div className="flex gap-2">
-                <Button variant="ghost" size="icon" onClick={() => setIsEditing(!isEditing)} className="text-white hover:bg-white/10">
-                  {isEditing ? <Check className="w-5 h-5" /> : <Edit className="w-5 h-5" />}
-                </Button>
-                <Button variant="ghost" size="icon" onClick={handleCopy} className="text-white hover:bg-white/10">
-                  <Copy className="w-5 h-5" />
-                </Button>
-                <Button variant="ghost" size="icon" onClick={handleRegenerate} className="text-white hover:bg-white/10">
-                  <RotateCcw className="w-5 h-5" />
-                </Button>
-              </div>
+          <Card className="p-6 sm:p-8 bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 shadow-2xl rounded-3xl w-full max-w-5xl mx-auto">
+            {/* Top Action Icons */}
+            <div className="flex items-center justify-end gap-3 mb-4">
+              <Button variant="ghost" size="icon" onClick={() => setIsEditing(!isEditing)} className="text-white hover:bg-white/10">
+                {isEditing ? <Check className="w-5 h-5" /> : <Edit className="w-5 h-5" />}
+              </Button>
+              <Button variant="ghost" size="icon" onClick={handleCopy} className="text-white hover:bg-white/10">
+                <Copy className="w-5 h-5" />
+              </Button>
+              <Button variant="ghost" size="icon" onClick={handleRegenerate} className="text-white hover:bg-white/10">
+                <RotateCcw className="w-5 h-5" />
+              </Button>
             </div>
 
-            {/* Topic Display */}
-            <div className="mb-4 p-4 bg-gray-700/30 rounded-2xl border border-gray-600/30">
-              <p className="text-sm text-gray-400 mb-1">Topic:</p>
-              <p className="text-white font-medium">{result.topic}</p>
-            </div>
-
-            {/* Essay Content */}
+            {/* Essay Body */}
             {isEditing ? (
               <Textarea
                 value={editedResult}
                 onChange={(e) => setEditedResult(e.target.value)}
-                className="h-full bg-gray-700/50 border border-gray-600/50 text-white rounded-2xl resize-none focus:ring-2 focus:ring-orange-500/50 font-serif text-lg leading-relaxed p-6"
+                className="min-h-[60vh] h-[70vh] bg-gray-700/50 border border-gray-600/50 text-white rounded-2xl resize-none focus:ring-2 focus:ring-orange-500/50 font-serif text-lg leading-relaxed p-6"
               />
             ) : (
-              <Textarea
-                value={result.content}
-                readOnly
-                className="h-full bg-transparent border-0 text-white rounded-2xl resize-none font-serif text-base sm:text-lg leading-relaxed focus:ring-0 w-full"
-              />
+              <div className="whitespace-pre-wrap font-serif text-base sm:text-lg leading-relaxed p-1">
+                {result.content}
+              </div>
             )}
           </Card>
         </motion.div>
 
-        {/* Action Buttons Bottom */}
+        {/* Bottom Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mt-6 flex flex-col sm:flex-row gap-4 justify-center px-4"
+          className="mt-8 flex flex-col sm:flex-row gap-4 justify-center"
         >
           <Link href="/tools/essay">
             <Button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white rounded-2xl px-8 py-3 font-medium">
@@ -154,7 +140,7 @@ export default function EssayResultPage() {
             </Button>
           </Link>
           <Link href="/">
-            <Button variant="outline" className="border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-2xl px-8 py-3 font-medium bg-transparent">
+            <Button variant="outline" className="border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-2xl px-8 py-3 font-medium">
               Back to Home
             </Button>
           </Link>
