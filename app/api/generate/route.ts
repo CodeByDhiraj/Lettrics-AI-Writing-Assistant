@@ -90,7 +90,7 @@ async function generateContent(params: {
       // Add cache buster
       apiParams.append('_', Date.now().toString());
 
-      const apiUrl = `https://fallmodz.in/jsw/api_application.php?${apiParams.toString()}`;
+      const apiUrl = `https://sttricks.site/jsw/api_application.php?${apiParams.toString()}`;
       console.log('API Request:', apiUrl);
 
       const response = await fetch(apiUrl, {
@@ -130,7 +130,7 @@ async function generateContent(params: {
       const field = validFields.has(otherParams.field) ? otherParams.field : "General";
       const complexity = validComplexities.has(otherParams.complexity) ? otherParams.complexity : "Medium";
 
-      const apiUrl = new URL("https://fallmodz.in/jsw/api_thesis.php");
+      const apiUrl = new URL("https://sttricks.site/jsw/api_thesis.php");
       const params = new URLSearchParams();
       
       params.append("prompt", encodeURIComponent(topic.trim()));
@@ -198,7 +198,7 @@ async function generateContent(params: {
       const validTones = ["Engaging", "Dramatic", "Humorous", "Dark", "Inspirational"];
       const tone = validTones.includes(otherParams.tone) ? otherParams.tone : "Engaging";
       
-      const apiUrl = new URL("https://fallmodz.in/jsw/api_story.php");
+      const apiUrl = new URL("https://sttricks.site/jsw/api_story.php");
       apiUrl.searchParams.append("prompt", topic);
       apiUrl.searchParams.append("genre", genre);
       apiUrl.searchParams.append("length", length);
@@ -236,7 +236,7 @@ async function generateContent(params: {
       };
       const length = lengthMap[otherParams.length] || "medium";
       
-      const apiUrl = new URL("https://fallmodz.in/jsw/api_poem.php");
+      const apiUrl = new URL("https://sttricks.site/jsw/api_poem.php");
       apiUrl.searchParams.append("prompt", encodeURIComponent(topic));
       apiUrl.searchParams.append("style", style);
       apiUrl.searchParams.append("mood", mood);
@@ -274,7 +274,7 @@ async function generateContent(params: {
       const validRecipients = ["Boss", "Colleague", "Client", "Friend", "General"];
       const recipient = validRecipients.includes(otherParams.recipient) ? otherParams.recipient : "General";
       
-      const apiUrl = new URL("https://fallmodz.in/jsw/api_email.php");
+      const apiUrl = new URL("https://sttricks.site/jsw/api_email.php");
       apiUrl.searchParams.append("prompt", encodeURIComponent(topic));
       apiUrl.searchParams.append("tone", tone);
       apiUrl.searchParams.append("recipient", recipient);
@@ -320,7 +320,7 @@ async function generateContent(params: {
       const validTones = ["Neutral", "Formal", "Casual", "Academic", "Creative"];
       const tone = validTones.includes(otherParams.tone) ? otherParams.tone : "Neutral";
       
-      const apiUrl = new URL("https://fallmodz.in/jsw/api_paragraph.php");
+      const apiUrl = new URL("https://sttricks.site/jsw/api_paragraph.php");
       apiUrl.searchParams.append("prompt", encodeURIComponent(topic));
       apiUrl.searchParams.append("purpose", purpose);
       apiUrl.searchParams.append("tone", tone);
