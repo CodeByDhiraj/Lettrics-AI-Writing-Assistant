@@ -1,0 +1,219 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
+import {
+  ArrowLeft,
+  Copy,
+  RotateCcw,
+  Edit,
+  Check,
+  FileText,
+  Sparkles,
+  Home,
+} from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
+import { Card } from "@/components/ui/card"
+import { useToast } from "@/hooks/use-toast"
+
+export default function ReportResultPage() {
+  const [result, setResult] = useState<any>(null)
+  const [isEditing, setIsEditing] = useState(false)
+  const [editedResult, setEditedResult] = useState("")
+  const router = useRouter()
+  const { toast } = useToast()
+
+  useEffect(() => {
+    const savedResult = sessionStorage.getItem("lettrics-result")
+    if (!savedResult) {
+      router.push("/tools/report")
+      return
+    }
+
+    const data = JSON.parse(savedResult)
+    setResult(data)
+    setEditedResult(data.content)
+  }, [router])
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(isEditing ? editedResult : result.content)
+    toast({
+      title: "Copied!",
+      description: "Report copied to clipboard.",
+    })
+  }
+
+  const handleRegenerate = () => {
+    router.push("/tools/report")
+  }
+
+  const handleSaveEdit = () => {
+    setResult({ ...result, content: editedResult })
+    setIsEditing(false)
+    toast({
+      title: "Saved!",
+      description: "Your edits have been saved.",
+    })
+  }
+
+  if (!result) return null
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-zinc-900 to-stone-900">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-orange-500/10 to-amber-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+      </div>
+
+      <header className="relative z-10 flex items-center justify-between p-6 pt-12">
+        <div className="flex items-center gap-4">
+          <Link href="/tools/report">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="rounded-full text-gray-300 hover:text-white hover:bg-white/10 p-3"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+          </Link>
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <div className="w-14 h-14 bg-gradient-to-br from-yellow-500 via-orange-500 to-red-500 rounded-3xl flex items-center justify-center shadow-2xl shadow-orange-500/25">
+                <FileText className="w-8 h-8 text-white" />
+              </div>
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-white to-yellow-300 rounded-full flex items-center justify-center">
+                <Sparkles className="w-2.5 h-2.5 text-orange-600" />
+              </div>
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-white">Report Ready</h1>
+              <p className="text-sm text-gray-400">Your AI-generated report is complete</p>
+            </div>
+          </div>
+        </div>
+
+        <Link href="/">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="rounded-full text-gray-300 hover:text-white hover:bg-white/10 p-3"
+          >
+            <Home className="w-5 h-5" />
+          </Button>
+        </Link>
+      </header>
+
+      <div className="relative z-10 px-6 pb-24">
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Card className="p-8 bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 shadow-2xl rounded-3xl">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold text-white flex items-center gap-3">
+                <FileText className="w-6 h-6 text-orange-400" />
+                Generated Report
+              </h3>
+              <div className="flex gap-3">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsEditing(!isEditing)}
+                  className="rounded-2xl bg-gray-700/50 border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-600/50 px-4 py-2"
+                >
+                  {isEditing ? <Check className="w-4 h-4 mr-2" /> : <Edit className="w-4 h-4 mr-2" />}
+                  {isEditing ? "Save" : "Edit"}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleCopy}
+                  className="rounded-2xl bg-gray-700/50 border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-600/50 px-4 py-2"
+                >
+                  <Copy className="w-4 h-4 mr-2" />
+                  Copy
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleRegenerate}
+                  className="rounded-2xl bg-gray-700/50 border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-600/50 px-4 py-2"
+                >
+                  <RotateCcw className="w-4 h-4 mr-2" />
+                  New Report
+                </Button>
+              </div>
+            </div>
+
+            <div className="mb-6 p-4 bg-gray-700/30 rounded-2xl border border-gray-600/30">
+              <p className="text-sm text-gray-400 mb-1">Topic:</p>
+              <p className="text-white font-medium">{result.topic}</p>
+            </div>
+
+            {isEditing ? (
+              <div className="space-y-6">
+                <Textarea
+                  value={editedResult}
+                  onChange={(e) => setEditedResult(e.target.value)}
+                  className="min-h-[400px] bg-gray-700/50 border border-gray-600/50 text-white rounded-2xl resize-none focus:ring-2 focus:ring-orange-500/50 font-serif text-lg leading-relaxed p-6"
+                />
+                <div className="flex gap-3">
+                  <Button
+                    onClick={handleSaveEdit}
+                    className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-2xl px-6 py-3"
+                  >
+                    <Check className="w-4 h-4 mr-2" />
+                    Save Changes
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setEditedResult(result.content)
+                      setIsEditing(false)
+                    }}
+                    className="border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-2xl px-6 py-3"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="bg-gray-700/30 rounded-2xl p-6 border border-gray-600/30">
+                <Textarea
+                  value={result.content}
+                  readOnly
+                  className="min-h-[400px] bg-transparent border-0 text-white rounded-2xl resize-none font-serif text-lg leading-relaxed focus:ring-0"
+                />
+              </div>
+            )}
+          </Card>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mt-8 flex flex-col sm:flex-row gap-4 justify-center"
+        >
+          <Link href="/tools/report">
+            <Button className="bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white rounded-2xl px-8 py-3 font-medium">
+              Write Another Report
+            </Button>
+          </Link>
+          <Link href="/">
+            <Button
+              variant="outline"
+              className="border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-2xl px-8 py-3 font-medium bg-transparent"
+            >
+              Back to Home
+            </Button>
+          </Link>
+        </motion.div>
+      </div>
+    </div>
+  )
+}
