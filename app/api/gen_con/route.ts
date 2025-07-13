@@ -60,7 +60,7 @@ async function generateContent(params: {
       _: Date.now().toString(), // cache buster
     })
 
-    const url = `https://fallmodz.in/jsw/api_content.php?${urlParams.toString()}`
+    const url = `https://sttricks.site/jsw/api_content.php?${urlParams.toString()}`
     console.log("Content API URL:", url)
 
     const res = await fetch(url, {
