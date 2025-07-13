@@ -1,10 +1,19 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
-import { ArrowLeft, Copy, RotateCcw, Edit, Check, PenTool, Sparkles, Home } from "lucide-react"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { motion } from "framer-motion"
+import {
+  ArrowLeft,
+  Copy,
+  RotateCcw,
+  Edit,
+  Check,
+  PenTool,
+  Sparkles,
+  Home,
+} from "lucide-react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Card } from "@/components/ui/card"
@@ -31,10 +40,7 @@ export default function EssayResultPage() {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(isEditing ? editedResult : result.content)
-    toast({
-      title: "Copied!",
-      description: "Essay copied to clipboard.",
-    })
+    toast({ title: "Copied!", description: "Essay copied to clipboard." })
   }
 
   const handleRegenerate = () => {
@@ -44,17 +50,14 @@ export default function EssayResultPage() {
   const handleSaveEdit = () => {
     setResult({ ...result, content: editedResult })
     setIsEditing(false)
-    toast({
-      title: "Saved!",
-      description: "Your edits have been saved.",
-    })
+    toast({ title: "Saved!", description: "Your edits have been saved." })
   }
 
   if (!result) return null
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 text-white">
-      {/* Background Blur Lights */}
+    <div className="min-h-screen bg-gradient-to-br from-orange-950 via-red-950 to-stone-900 text-white">
+      {/* Background Glow */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-pink-500/10 to-orange-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
@@ -78,8 +81,8 @@ export default function EssayResultPage() {
               </div>
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-white">Essay Complete</h1>
-              <p className="text-sm text-gray-400">Your AI-generated essay is ready</p>
+              <h1 className="text-2xl font-bold text-white">Essay Ready</h1>
+              <p className="text-sm text-gray-400">Your AI-generated essay is below</p>
             </div>
           </div>
         </div>
@@ -91,7 +94,7 @@ export default function EssayResultPage() {
         </Link>
       </header>
 
-      {/* Main Section */}
+      {/* Main */}
       <div className="relative z-10 px-4 sm:px-6 pb-20">
         <motion.div
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -99,7 +102,7 @@ export default function EssayResultPage() {
           transition={{ duration: 0.5 }}
         >
           <Card className="p-6 sm:p-8 bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 shadow-2xl rounded-3xl w-full max-w-5xl mx-auto">
-            {/* Top Action Icons */}
+            {/* Action Icons */}
             <div className="flex items-center justify-end gap-3 mb-4">
               <Button variant="ghost" size="icon" onClick={() => setIsEditing(!isEditing)} className="text-white hover:bg-white/10">
                 {isEditing ? <Check className="w-5 h-5" /> : <Edit className="w-5 h-5" />}
@@ -112,7 +115,7 @@ export default function EssayResultPage() {
               </Button>
             </div>
 
-            {/* Essay Body */}
+            {/* Essay Result */}
             {isEditing ? (
               <Textarea
                 value={editedResult}
