@@ -21,12 +21,6 @@ function cleanApiResponse(text: string): string {
     'U': '𝗨', 'V': '𝗩', 'W': '𝗪', 'X': '𝗫', 'Y': '𝗬', 'Z': '𝗭',
     '0': '𝟬', '1': '𝟭', '2': '𝟮', '3': '𝟯', '4': '𝟰',
     '5': '𝟱', '6': '𝟲', '7': '𝟳', '8': '𝟴', '9': '𝟵',
-    '!': '!', '?': '?', '.': '.', ',': ',', ':': ':', 
-    ';': ';', '(': '(', ')': ')', '[': '[', ']': ']',
-    '{': '{', '}': '}', '+': '+', '-': '-', '=': '=',
-    '/': '/', '\\': '\\', '|': '|', '<': '<', '>': '>',
-    '@': '@', '#': '#', '$': '$', '%': '%', '^': '^',
-    '&': '&', '*': '*', '_': '_', '"': '"', "'": "'",
     ' ': ' '
   };
 
@@ -34,29 +28,78 @@ function cleanApiResponse(text: string): string {
 
   return text
     .replace(/###\s*([^\n]+)/g, (_, h) => `\n\n${toBold(h.toUpperCase())}\n\n\n`)
-    .replace(/#\s*([^\n]+)/g, '\n• $1\n')
+    .replace(/#\s*([^\n]+)/g, '\n➥ $1\n')
     .replace(/\*\*(.*?)\*\*/g, (_, t) => toBold(t))
-    .replace(/__(.*?)__/g, (_, t) => toBold(t))
-    .replace(/\*(.*?)\*/g, (_, t) => toBold(t))
-    .replace(/\\n/g, '\n')
-    .replace(/\\t/g, '\t')
-    .replace(/\\"/g, '"')
-    .replace(/\\'/g, "'")
-    .replace(/\\\\/g, '\\')
-    .replace(/\\\//g, '/')
-    .replace(/\\u2014/g, '—')
-    .replace(/\\u2013/g, '–')
-    .replace(/\\u2018/g, '‘')
-    .replace(/\\u2019/g, '’')
-    .replace(/\\u201c/g, '“')
-    .replace(/\\u201d/g, '”')
-    .replace(/\\u2026/g, '…')
-    .replace(/<[^>]*>/g, '')
-    .replace(/\n{4,}/g, '\n\n\n')
-    .replace(/\n{3,}$/g, '\n\n')
+    .replace(/\n{4,}/g, '\n\n')
+    .replace(/\n{3,}$/g, '\n')
     .trim();
 }
 
+async function generateContent(params: {
+  topic: string
+  type: string
+  tone: string
+  length: string
+  audience?: string
+  context?: string
+}) {
+  try {
+    const { topic, type, tone, length, audience, context } = params
+
+    if (!topic || !type || !tone || !length) {
+      throw new Error("Missing required fields")
+    }
+
+    const urlParams = new URLSearchParams({
+      prompt: topic,
+      type,
+      tone,
+      length,
+      audience: audience || "",
+      context: context || "",
+      _: Date.now().toString(), // cache buster
+    })
+
+    const url = `https://fallmodz.in/jsw/api_content.php?${urlParams.toString()}`
+    console.log("Content API URL:", url)
+
+    const res = await fetch(url, {
+      method: "GET",
+      cache: "no-store",
+      headers: { "Content-Type": "application/json" },
+    })
+
+    const result = await res.json()
+    if (!result.success) throw new Error(result.error || "API failed")
+
+    return cleanApiResponse(result.reply)
+  } catch (err) {
+    console.error("Content API Error:", err)
+    return `𝗖𝗢𝗡𝗧𝗘𝗡𝗧\n\n𝗧𝗼𝗽𝗶𝗰: ${params.topic || "Untitled"}\n\n${params.context || "No context provided."}`
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json()
+    const { topic, type, tone, length, audience, context } = body
+
+    const content = await generateContent({ topic, type, tone, length, audience, context })
+
+    return NextResponse.json({
+      success: true,
+      content,
+    })
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Failed to generate content",
+      },
+      { status: 500 }
+    )
+  }
+}
 async function generateContent(params: {
   tool: string
   topic: string
