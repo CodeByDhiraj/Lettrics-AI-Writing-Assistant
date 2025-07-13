@@ -105,7 +105,8 @@ export default function EssayResultPage() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <Card className="p-4 sm:p-6 md:p-8 bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 shadow-2xl rounded-3xl w-full max-w-3xl mx-auto">
+          <Card className="p-4 sm:p-6 md:p-8 bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 shadow-2xl rounded-3xl w-full h-[calc(100vh-220px)] overflow-y-auto">
+
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-2xl font-bold text-white flex items-center gap-3">
                 <PenTool className="w-6 h-6 text-orange-400" />
@@ -113,30 +114,32 @@ export default function EssayResultPage() {
               </h3>
               <div className="flex flex-wrap gap-3 justify-end">
                 <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setIsEditing(!isEditing)}
-                  className="rounded-2xl bg-gray-700/50 border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-600/50 px-4 py-2"
-                >
-                  {isEditing ? <Check className="w-4 h-4 mr-2" /> : <Edit className="w-4 h-4 mr-2" />}
-                  {isEditing ? "Save" : "Edit"}
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleCopy}
-                  className="rounded-2xl bg-gray-700/50 border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-600/50 px-4 py-2"
-                >
-                  <Copy className="w-4 h-4 mr-2" />
-                  Copy
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleRegenerate}
-                  className="rounded-2xl bg-gray-700/50 border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-600/50 px-4 py-2"
-                >
-                  <RotateCcw className="w-4 h-4 mr-2" />
+  variant="ghost"
+  size="icon"
+  onClick={() => setIsEditing(!isEditing)}
+  className="text-white hover:bg-white/10"
+>
+  {isEditing ? <Check className="w-5 h-5" /> : <Edit className="w-5 h-5" />}
+</Button>
+
+<Button
+  variant="ghost"
+  size="icon"
+  onClick={handleCopy}
+  className="text-white hover:bg-white/10"
+>
+  <Copy className="w-5 h-5" />
+</Button>
+
+<Button
+  variant="ghost"
+  size="icon"
+  onClick={handleRegenerate}
+  className="text-white hover:bg-white/10"
+>
+  <RotateCcw className="w-5 h-5" />
+</Button>
+
                   New Essay
                 </Button>
               </div>
@@ -178,10 +181,11 @@ export default function EssayResultPage() {
             ) : (
               <div className="bg-gray-700/30 rounded-2xl p-6 border border-gray-600/30">
                 <Textarea
-                  value={result.content}
-                  readOnly
-                  className="min-h-[300px] bg-transparent border-0 text-white rounded-2xl resize-none font-serif text-base sm:text-lg leading-relaxed focus:ring-0 w-full"
-                />
+  value={result.content}
+  readOnly
+  className="h-full bg-transparent border-0 text-white rounded-2xl resize-none font-serif text-base sm:text-lg leading-relaxed focus:ring-0 w-full"
+/>
+
               </div>
             )}
           </Card>
