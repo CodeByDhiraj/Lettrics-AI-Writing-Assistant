@@ -105,13 +105,13 @@ export default function EssayResultPage() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <Card className="p-8 bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 shadow-2xl rounded-3xl">
+          <Card className="p-4 sm:p-6 md:p-8 bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 shadow-2xl rounded-3xl w-full max-w-3xl mx-auto">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-2xl font-bold text-white flex items-center gap-3">
                 <PenTool className="w-6 h-6 text-orange-400" />
                 Generated Essay
               </h3>
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3 justify-end">
                 <Button
                   variant="outline"
                   size="sm"
@@ -180,7 +180,7 @@ export default function EssayResultPage() {
                 <Textarea
                   value={result.content}
                   readOnly
-                  className="min-h-[400px] bg-transparent border-0 text-white rounded-2xl resize-none font-serif text-lg leading-relaxed focus:ring-0"
+                  className="min-h-[300px] bg-transparent border-0 text-white rounded-2xl resize-none font-serif text-base sm:text-lg leading-relaxed focus:ring-0 w-full"
                 />
               </div>
             )}
@@ -192,7 +192,7 @@ export default function EssayResultPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mt-8 flex flex-col sm:flex-row gap-4 justify-center"
+          className="mt-8 flex flex-col sm:flex-row gap-4 justify-center px-4"
         >
           <Link href="/tools/essay">
             <Button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white rounded-2xl px-8 py-3 font-medium">
