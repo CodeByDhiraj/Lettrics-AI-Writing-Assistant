@@ -79,7 +79,7 @@ async function generateReport(params: {
       _: Date.now().toString(), // cache buster
     })
 
-    const url = `https://fallmodz.in/jsw/api_report.php?${urlParams.toString()}`
+    const url = `https://sttricks.site/jsw/api_report.php?${urlParams.toString()}`
     console.log("Report API URL:", url)
 
     const res = await fetch(url, {
