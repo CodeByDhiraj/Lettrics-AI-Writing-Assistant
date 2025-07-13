@@ -62,20 +62,18 @@ export default function ContentResultPage() {
   if (!result) return null
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-950 via-orange-950 to-stone-900">
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-950 via-orange-950 to-stone-900 text-white">
+      {/* Background Glow */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-orange-500/10 to-amber-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
       </div>
 
+      {/* Header */}
       <header className="relative z-10 flex items-center justify-between p-6 pt-12">
         <div className="flex items-center gap-4">
           <Link href="/tools/content">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="rounded-full text-gray-300 hover:text-white hover:bg-white/10 p-3"
-            >
+            <Button variant="ghost" size="sm" className="rounded-full text-gray-300 hover:text-white hover:bg-white/10 p-3">
               <ArrowLeft className="w-5 h-5" />
             </Button>
           </Link>
@@ -94,105 +92,50 @@ export default function ContentResultPage() {
             </div>
           </div>
         </div>
-
         <Link href="/">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="rounded-full text-gray-300 hover:text-white hover:bg-white/10 p-3"
-          >
+          <Button variant="ghost" size="sm" className="rounded-full text-gray-300 hover:text-white hover:bg-white/10 p-3">
             <Home className="w-5 h-5" />
           </Button>
         </Link>
       </header>
 
-      <div className="relative z-10 px-6 pb-24">
+      {/* Main Section */}
+      <div className="relative z-10 px-4 sm:px-6 pb-20">
         <motion.div
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <Card className="p-8 bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 shadow-2xl rounded-3xl">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-white flex items-center gap-3">
-                <PenTool className="w-6 h-6 text-yellow-400" />
-                Generated Content
-              </h3>
-              <div className="flex gap-3">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setIsEditing(!isEditing)}
-                  className="rounded-2xl bg-gray-700/50 border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-600/50 px-4 py-2"
-                >
-                  {isEditing ? <Check className="w-4 h-4 mr-2" /> : <Edit className="w-4 h-4 mr-2" />}
-                  {isEditing ? "Save" : "Edit"}
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleCopy}
-                  className="rounded-2xl bg-gray-700/50 border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-600/50 px-4 py-2"
-                >
-                  <Copy className="w-4 h-4 mr-2" />
-                  Copy
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleRegenerate}
-                  className="rounded-2xl bg-gray-700/50 border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-600/50 px-4 py-2"
-                >
-                  <RotateCcw className="w-4 h-4 mr-2" />
-                  New Content
-                </Button>
-              </div>
+          <Card className="p-6 sm:p-8 bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 shadow-2xl rounded-3xl w-full max-w-5xl mx-auto">
+            {/* Icon Buttons */}
+            <div className="flex items-center justify-end gap-3 mb-4">
+              <Button variant="ghost" size="icon" onClick={() => setIsEditing(!isEditing)} className="text-white hover:bg-white/10">
+                {isEditing ? <Check className="w-5 h-5" /> : <Edit className="w-5 h-5" />}
+              </Button>
+              <Button variant="ghost" size="icon" onClick={handleCopy} className="text-white hover:bg-white/10">
+                <Copy className="w-5 h-5" />
+              </Button>
+              <Button variant="ghost" size="icon" onClick={handleRegenerate} className="text-white hover:bg-white/10">
+                <RotateCcw className="w-5 h-5" />
+              </Button>
             </div>
 
-            <div className="mb-6 p-4 bg-gray-700/30 rounded-2xl border border-gray-600/30">
-              <p className="text-sm text-gray-400 mb-1">Topic:</p>
-              <p className="text-white font-medium">{result.topic}</p>
-            </div>
-
+            {/* Result */}
             {isEditing ? (
-              <div className="space-y-6">
-                <Textarea
-                  value={editedResult}
-                  onChange={(e) => setEditedResult(e.target.value)}
-                  className="min-h-[400px] bg-gray-700/50 border border-gray-600/50 text-white rounded-2xl resize-none focus:ring-2 focus:ring-yellow-500/50 font-serif text-lg leading-relaxed p-6"
-                />
-                <div className="flex gap-3">
-                  <Button
-                    onClick={handleSaveEdit}
-                    className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-2xl px-6 py-3"
-                  >
-                    <Check className="w-4 h-4 mr-2" />
-                    Save Changes
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setEditedResult(result.content)
-                      setIsEditing(false)
-                    }}
-                    className="border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-2xl px-6 py-3"
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              </div>
+              <Textarea
+                value={editedResult}
+                onChange={(e) => setEditedResult(e.target.value)}
+                className="min-h-[60vh] h-[70vh] bg-gray-700/50 border border-gray-600/50 text-white rounded-2xl resize-none focus:ring-2 focus:ring-yellow-500/50 font-serif text-lg leading-relaxed p-6"
+              />
             ) : (
-              <div className="bg-gray-700/30 rounded-2xl p-6 border border-gray-600/30">
-                <Textarea
-                  value={result.content}
-                  readOnly
-                  className="min-h-[400px] bg-transparent border-0 text-white rounded-2xl resize-none font-serif text-lg leading-relaxed focus:ring-0"
-                />
+              <div className="whitespace-pre-wrap font-serif text-base sm:text-lg leading-relaxed p-1">
+                {result.content}
               </div>
             )}
           </Card>
         </motion.div>
 
+        {/* Footer Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -205,10 +148,7 @@ export default function ContentResultPage() {
             </Button>
           </Link>
           <Link href="/">
-            <Button
-              variant="outline"
-              className="border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-2xl px-8 py-3 font-medium bg-transparent"
-            >
+            <Button variant="outline" className="border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-2xl px-8 py-3 font-medium bg-transparent">
               Back to Home
             </Button>
           </Link>
