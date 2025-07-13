@@ -54,7 +54,7 @@ function cleanApiResponse(text: string): string {
     .replace(/\\u201d/g, '”')
     .replace(/\\u2026/g, '…')
     .replace(/<[^>]*>/g, '')
-    .replace(/\n{4,}/g, '\n\n\n')
+    .replace(/\n{4,}/g, '\n\n')
     .replace(/\n{3,}$/g, '\n\n')
     .trim();
 }
