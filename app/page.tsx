@@ -87,7 +87,7 @@ const tools = [
   {
     id: "application",
     title: "Application Writer",
-    description: "for students & professionals",
+    description: "For students & professionals",
     icon: Briefcase,
     gradient: "from-violet-400 via-purple-400 to-fuchsia-400",
     bgGradient: "from-violet-500/10 via-purple-500/10 to-fuchsia-500/10",
