@@ -17,7 +17,10 @@ export async function POST(request: NextRequest) {
     pass: process.env.GMAIL_APP_PASSWORD,
   },
 })
+<<<<<<< HEAD
 
+=======
+>>>>>>> 010ced426e26669e9a609b891d7e2e36eeba6619
 
     // Email content
     const mailOptions = {

@@ -64,10 +64,17 @@ export default function SettingsPage() {
       case "rate":
         window.open("https://play.google.com/store", "_blank")
         break
+<<<<<<< HEAD
         case "privacy":
           window.location.href = "/privacy"
           break
           case "about":
+=======
+       case "privacy":
+          window.location.href = "/privacy"
+          break
+       case "about":
+>>>>>>> 010ced426e26669e9a609b891d7e2e36eeba6619
           window.location.href = "/about"
           break
           case "terms":

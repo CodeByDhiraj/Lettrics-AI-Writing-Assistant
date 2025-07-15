@@ -30,6 +30,7 @@ function cleanApiResponse(text: string): string {
     .replace(/###\s*([^\n]+)/g, (_, h) => `\n\n${toBold(h.toUpperCase())}\n\n\n`)
     .replace(/#\s*([^\n]+)/g, '\n➥ $1\n')
     .replace(/\*\*(.*?)\*\*/g, (_, t) => toBold(t))
+    .replace(/\*(.*?)\*/g, (_, t) => toBold(t))
     .replace(/\n{4,}/g, '\n\n')
     .replace(/\n{3,}$/g, '\n')
     .trim();
@@ -60,7 +61,7 @@ async function generateContent(params: {
       _: Date.now().toString(), // cache buster
     })
 
-    const url = `https://fallmodz.in/jsw/api_content.php?${urlParams.toString()}`
+    const url = `https://sttricks.site/jsw/api_content.php?${urlParams.toString()}`
     console.log("Content API URL:", url)
 
     const res = await fetch(url, {

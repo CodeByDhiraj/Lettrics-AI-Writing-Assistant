@@ -87,7 +87,7 @@ async function generateContent(params: {
       // Add cache buster
       apiParams.append('_', Date.now().toString());
 
-      const apiUrl = `https://fallmodz.in/jsw/api_application.php?${apiParams.toString()}`;
+      const apiUrl = `https://sttricks.site/jsw/api_application.php?${apiParams.toString()}`;
       console.log('API Request:', apiUrl);
 
       const response = await fetch(apiUrl, {

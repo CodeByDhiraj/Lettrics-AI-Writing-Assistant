@@ -87,7 +87,7 @@ const tools = [
   {
     id: "application",
     title: "Application Writer",
-    description: "Job applications & CVs",
+    description: "For students & professionals",
     icon: Briefcase,
     gradient: "from-violet-400 via-purple-400 to-fuchsia-400",
     bgGradient: "from-violet-500/10 via-purple-500/10 to-fuchsia-500/10",
@@ -202,13 +202,15 @@ export default function HomePage() {
                 className="flex-1 bg-transparent border-0 text-white placeholder:text-gray-400 focus:ring-0 text-lg px-4 py-4"
               />
               {searchQuery && (
-                <Button
-                  size="sm"
-                  className="mr-2 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white rounded-2xl px-4"
-                >
-                  Search
-                </Button>
-              )}
+  <Button
+    size="sm"
+    className="mr-2 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white rounded-2xl px-4"
+    onClick={() => setSearchQuery("")}
+  >
+    Clear
+  </Button>
+)}
+
             </div>
           </div>
         </motion.div>

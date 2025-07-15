@@ -103,7 +103,7 @@ export default function EssayWriter() {
     { value: "High School", label: "High School" },
     { value: "Undergraduate", label: "Undergraduate" },
     { value: "Graduate", label: "Graduate" },
-    { value: "PhD", label: "PhD" },
+    { value: "Professional", label: "Professional" },
   ]
 
   const handleGenerate = async () => {

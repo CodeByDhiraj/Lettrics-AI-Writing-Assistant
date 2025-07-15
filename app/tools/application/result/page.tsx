@@ -47,12 +47,14 @@ export default function ApplicationResultPage() {
   if (!result) return null
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      {/* Background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-violet-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-fuchsia-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
       </div>
 
+      {/* Header */}
       <header className="relative z-10 flex items-center justify-between p-6 pt-12">
         <div className="flex items-center gap-4">
           <Link href="/tools/application">
@@ -82,51 +84,59 @@ export default function ApplicationResultPage() {
         </Link>
       </header>
 
-      <div className="relative z-10 px-6 pb-24">
-        <motion.div initial={{ opacity: 0, y: 20, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.5 }}>
-          <Card className="p-8 bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 shadow-2xl rounded-3xl">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-white flex items-center gap-3">
-                <FileText className="w-6 h-6 text-violet-400" />
-                Generated Application
-              </h3>
-              <div className="flex gap-3">
-                <Button onClick={() => setIsEditing(!isEditing)} variant="outline" size="sm" className="rounded-2xl bg-gray-700/50 border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-600/50 px-4 py-2">
-                  {isEditing ? <Check className="w-4 h-4 mr-2" /> : <Edit className="w-4 h-4 mr-2" />}
-                  {isEditing ? "Save" : "Edit"}
-                </Button>
-                <Button onClick={handleCopy} variant="outline" size="sm" className="rounded-2xl bg-gray-700/50 border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-600/50 px-4 py-2">
-                  <Copy className="w-4 h-4 mr-2" />
-                  Copy
-                </Button>
-                <Button onClick={handleRegenerate} variant="outline" size="sm" className="rounded-2xl bg-gray-700/50 border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-600/50 px-4 py-2">
-                  <RotateCcw className="w-4 h-4 mr-2" />
-                  New Application
-                </Button>
-              </div>
+      {/* Main Content */}
+      <div className="relative z-10 px-4 sm:px-6 pb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Card className="p-6 sm:p-8 bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 shadow-2xl rounded-3xl w-full max-w-5xl mx-auto">
+            {/* Icons */}
+            <div className="flex items-center justify-end gap-3 mb-4">
+              <Button variant="ghost" size="icon" onClick={() => setIsEditing(!isEditing)} className="text-white hover:bg-white/10">
+                {isEditing ? <Check className="w-5 h-5" /> : <Edit className="w-5 h-5" />}
+              </Button>
+              <Button variant="ghost" size="icon" onClick={handleCopy} className="text-white hover:bg-white/10">
+                <Copy className="w-5 h-5" />
+              </Button>
+              <Button variant="ghost" size="icon" onClick={handleRegenerate} className="text-white hover:bg-white/10">
+                <RotateCcw className="w-5 h-5" />
+              </Button>
             </div>
 
-            <div className="mb-6 p-4 bg-gray-700/30 rounded-2xl border border-gray-600/30">
-              <p className="text-sm text-gray-400 mb-1">Application Type:</p>
-              <p className="text-white font-medium">{result.type}</p>
-            </div>
-
+            {/* Body */}
             {isEditing ? (
               <Textarea
                 value={editedResult}
                 onChange={(e) => setEditedResult(e.target.value)}
-                className="min-h-[400px] bg-gray-700/50 border border-gray-600/50 text-white rounded-2xl resize-none focus:ring-2 focus:ring-violet-500/50 font-mono text-base leading-relaxed p-6"
+                className="min-h-[60vh] h-[70vh] bg-gray-700/50 border border-gray-600/50 text-white rounded-2xl resize-none focus:ring-2 focus:ring-violet-500/50 font-serif text-lg leading-relaxed p-6"
               />
             ) : (
-              <div className="bg-gray-700/30 rounded-2xl p-6 border border-gray-600/30">
-                <Textarea
-                  value={result.content}
-                  readOnly
-                  className="min-h-[400px] bg-transparent border-0 text-white rounded-2xl resize-none font-mono text-base leading-relaxed focus:ring-0"
-                />
+              <div className="whitespace-pre-wrap font-serif text-base sm:text-lg leading-relaxed p-1">
+                {result.content}
               </div>
             )}
           </Card>
+        </motion.div>
+
+        {/* Bottom Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mt-8 flex flex-col sm:flex-row gap-4 justify-center"
+        >
+          <Link href="/tools/application">
+            <Button className="bg-gradient-to-r from-violet-500 to-purple-500 hover:from-violet-600 hover:to-purple-600 text-white rounded-2xl px-8 py-3 font-medium">
+              Write Another Application
+            </Button>
+          </Link>
+          <Link href="/">
+            <Button variant="outline" className="border-gray-600/50 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-2xl px-8 py-3 font-medium">
+              Back to Home
+            </Button>
+          </Link>
         </motion.div>
       </div>
     </div>
