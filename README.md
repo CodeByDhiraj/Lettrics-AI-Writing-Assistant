@@ -25,6 +25,9 @@ Lettrics is a modern, AI-powered writing web app designed for students, professi
 - **Hosting**: Vercel / Hostinger
 - **Storage**: sessionStorage (no login required)
 
+- Mockup Created By https://previewed.app/template/85CE41EE
+
+
 ## 📸 Screenshots
 
 | Home Page | Tools Menu | Result Page |
